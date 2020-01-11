@@ -1,0 +1,3 @@
+function activate() {
+	alert("hello")
+}

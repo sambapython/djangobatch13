@@ -1,0 +1,15 @@
+
+3.create a project ERP 
+	app1: sales
+	app2: pur
+	app3: stock
+	app4: accounting
+create atleast two models for app and do migrations and migrate. Fill the data into tables 
+using shell. every table should contains atleast five records
+4.create a project ERP 
+	app1: sales
+	app2: pur
+	app3: stock
+	app4: accounting
+create atleast two models for each app
+insert atleast ten rows for table using django shell

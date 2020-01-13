@@ -1,3 +1,3 @@
 function activate() {
-	alert("hello")
+	// alert("hello")
 }

@@ -1,0 +1,195 @@
+from center.models import Product, Customer, SalesOrders
+
+In [2]: lenovo_lappy=Product(name="lenovo v1", cost=34000,description="lenovo company")
+
+In [3]: lenovo_lappy.save()
+
+In [4]: lenovo_lappy1=Product(name="lenovo v1", cost=34000)
+
+In [5]: lenovo_lappy1.save()
+
+In [6]: lenovo_lappy1=Product(name="lenovo v1")
+
+In [7]: lenovo_lappy1.save()
+ jay_customer = Customer(name="jay", address="ad1", email="jay@gmail.com",phone="9676622023")
+
+In [9]: jay_customer.save()
+
+In [10]: jay_customer1 = Customer(name="jay", address="ad1", email="jay@gmail.com",phone="9676622023")
+
+In [11]: jay_customer1.save()
+ jay_customer1 = Customer(name="jay", address="ad1", email="jay@gmail.com",phone="9676622024")
+
+In [13]: jay_customer1.save()
+-------------------------------------
+ jay_customer1 = Customer(name="jay", address="ad1", email="jay1@gmail.com",phone="9676622024")
+
+In [15]: jay_customer1.save()
+jay_customer1 = Customer(name="jay", address="ad1", email="jay1@gmail.com",phone="9676622024")
+
+In [15]: jay_customer1.save()
+
+In [16]: so = SalesOrders(description="this is sales order1", customer=jay_customer)
+
+In [17]: so.save()
+
+In [18]: so.products.add(lenovo_lappy)
+
+In [19]: so.products.add(lenovo_lappy1)
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+<ipython-input-19-714fefb583c7> in <module>
+----> 1 so.products.add(lenovo_lappy1)
+
+~\Anaconda3\lib\site-packages\django\db\models\fields\related_descriptors.py in add(self, through_defaults, *objs)
+    944                 self._add_items(
+    945                     self.source_field_name, self.target_field_name, *objs,
+--> 946                     through_defaults=through_defaults,
+    947                 )
+    948                 # If this is a symmetrical m2m relation to self, add the mirror
+
+~\Anaconda3\lib\site-packages\django\db\models\fields\related_descriptors.py in _add_items(self, source_field_name, target_field_name, through_defaults, *objs)
+   1117             # If there aren't any objects, there is nothing to do.
+   1118             if objs:
+-> 1119                 target_ids = self._get_target_ids(target_field_name, objs)
+   1120                 db = router.db_for_write(self.through, instance=self.instance)
+   1121                 can_ignore_conflicts, must_send_signals, can_fast_add = self._get_add_plan(db, source_field_name)
+
+~\Anaconda3\lib\site-packages\django\db\models\fields\related_descriptors.py in _get_target_ids(self, target_field_name, objs)
+   1049                             'Cannot add "%r": instance is on database "%s", '
+   1050                             'value is on database "%s"' %
+-> 1051                             (obj, self.instance._state.db, obj._state.db)
+   1052                         )
+   1053                     target_id = target_field.get_foreign_related_value(obj)[0]
+
+ValueError: Cannot add "<Product: Product object (None)>": instance is on database "default", value is on database "None"
+
+In [20]: lenovo_lappy1.name
+Out[20]: 'lenovo v1'
+
+In [21]: lenovo_lappy1.save()
+---------------------------------------------------------------------------
+IntegrityError                            Traceback (most recent call last)
+~\Anaconda3\lib\site-packages\django\db\backends\utils.py in _execute(self, sql, params, *ignored_wrapper_args)
+     85             else:
+---> 86                 return self.cursor.execute(sql, params)
+     87
+
+~\Anaconda3\lib\site-packages\django\db\backends\sqlite3\base.py in execute(self, query, params)
+    395         query = self.convert_query(query)
+--> 396         return Database.Cursor.execute(self, query, params)
+    397
+
+IntegrityError: NOT NULL constraint failed: center_product.cost
+
+The above exception was the direct cause of the following exception:
+
+IntegrityError                            Traceback (most recent call last)
+<ipython-input-21-f0d2687b554e> in <module>
+----> 1 lenovo_lappy1.save()
+
+~\Anaconda3\lib\site-packages\django\db\models\base.py in save(self, force_insert, force_update, using, update_fields)
+    744
+    745         self.save_base(using=using, force_insert=force_insert,
+--> 746                        force_update=force_update, update_fields=update_fields)
+    747     save.alters_data = True
+    748
+
+~\Anaconda3\lib\site-packages\django\db\models\base.py in save_base(self, raw, force_insert, force_update, using, update_fields)
+    782             updated = self._save_table(
+    783                 raw, cls, force_insert or parent_inserted,
+--> 784                 force_update, using, update_fields,
+    785             )
+    786         # Store the database on which the object was saved
+
+~\Anaconda3\lib\site-packages\django\db\models\base.py in _save_table(self, raw, cls, force_insert, force_update, using, update_fields)
+    885
+    886             returning_fields = meta.db_returning_fields
+--> 887             results = self._do_insert(cls._base_manager, using, fields, returning_fields, raw)
+    888             for result, field in zip(results, returning_fields):
+    889                 setattr(self, field.attname, result)
+
+~\Anaconda3\lib\site-packages\django\db\models\base.py in _do_insert(self, manager, using, fields, returning_fields, raw)
+    924         return manager._insert(
+    925             [self], fields=fields, returning_fields=returning_fields,
+--> 926             using=using, raw=raw,
+    927         )
+    928
+
+~\Anaconda3\lib\site-packages\django\db\models\manager.py in manager_method(self, *args, **kwargs)
+     80         def create_method(name, method):
+     81             def manager_method(self, *args, **kwargs):
+---> 82                 return getattr(self.get_queryset(), name)(*args, **kwargs)
+     83             manager_method.__name__ = method.__name__
+     84             manager_method.__doc__ = method.__doc__
+
+~\Anaconda3\lib\site-packages\django\db\models\query.py in _insert(self, objs, fields, returning_fields, raw, using, ignore_conflicts)
+   1202         query = sql.InsertQuery(self.model, ignore_conflicts=ignore_conflicts)
+   1203         query.insert_values(fields, objs, raw=raw)
+-> 1204         return query.get_compiler(using=using).execute_sql(returning_fields)
+   1205     _insert.alters_data = True
+   1206     _insert.queryset_only = False
+
+~\Anaconda3\lib\site-packages\django\db\models\sql\compiler.py in execute_sql(self, returning_fields)
+   1382         with self.connection.cursor() as cursor:
+   1383             for sql, params in self.as_sql():
+-> 1384                 cursor.execute(sql, params)
+   1385             if not self.returning_fields:
+   1386                 return []
+
+~\Anaconda3\lib\site-packages\django\db\backends\utils.py in execute(self, sql, params)
+     98     def execute(self, sql, params=None):
+     99         with self.debug_sql(sql, params, use_last_executed_query=True):
+--> 100             return super().execute(sql, params)
+    101
+    102     def executemany(self, sql, param_list):
+
+~\Anaconda3\lib\site-packages\django\db\backends\utils.py in execute(self, sql, params)
+     66
+     67     def execute(self, sql, params=None):
+---> 68         return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+     69
+     70     def executemany(self, sql, param_list):
+
+~\Anaconda3\lib\site-packages\django\db\backends\utils.py in _execute_with_wrappers(self, sql, params, many, executor)
+     75         for wrapper in reversed(self.db.execute_wrappers):
+     76             executor = functools.partial(wrapper, executor)
+---> 77         return executor(sql, params, many, context)
+     78
+     79     def _execute(self, sql, params, *ignored_wrapper_args):
+
+~\Anaconda3\lib\site-packages\django\db\backends\utils.py in _execute(self, sql, params, *ignored_wrapper_args)
+     84                 return self.cursor.execute(sql)
+     85             else:
+---> 86                 return self.cursor.execute(sql, params)
+     87
+     88     def _executemany(self, sql, param_list, *ignored_wrapper_args):
+
+~\Anaconda3\lib\site-packages\django\db\utils.py in __exit__(self, exc_type, exc_value, traceback)
+     88                 if dj_exc_type not in (DataError, IntegrityError):
+     89                     self.wrapper.errors_occurred = True
+---> 90                 raise dj_exc_value.with_traceback(traceback) from exc_value
+     91
+     92     def __call__(self, func):
+
+~\Anaconda3\lib\site-packages\django\db\backends\utils.py in _execute(self, sql, params, *ignored_wrapper_args)
+     84                 return self.cursor.execute(sql)
+     85             else:
+---> 86                 return self.cursor.execute(sql, params)
+     87
+     88     def _executemany(self, sql, param_list, *ignored_wrapper_args):
+
+~\Anaconda3\lib\site-packages\django\db\backends\sqlite3\base.py in execute(self, query, params)
+    394             return Database.Cursor.execute(self, query)
+    395         query = self.convert_query(query)
+--> 396         return Database.Cursor.execute(self, query, params)
+    397
+    398     def executemany(self, query, param_list):
+
+IntegrityError: NOT NULL constraint failed: center_product.cost
+
+In [22]: lenovo_lappy1.cost=345678
+
+In [23]: lenovo_lappy1.save()
+
+In [24]: so.products.add(lenovo_lappy1)

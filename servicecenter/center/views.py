@@ -1,35 +1,43 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from center.models import UserProfile
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
-def home_view(request):
+def signup_view(request):
+	msg=""
+	if request.method.lower()=="post":
+		data= request.POST
+		user = UserProfile(username=data.get("email"),
+					email=data.get("email"),
+					password=data.get("password"),
+					address = data.get("address"),
+					phone=data.get("phone"))
+		try:
+			user.save()
+			user.set_password(data.get("password"))
+			user.save()
+			msg="user created successfully"
+		except Exception as err:
+			msg = str(err)
+	return render(request,"center/signup.html",{"message":msg})
+def signin_view(request):
 	msg=""
 	method = request.method.lower()
 	if method=="post":
 		data= request.POST
-		if "signup" in data:
-			user = UserProfile(username=data.get("email"),
-				email=data.get("email"),
-				password=data.get("password"),
-				address = data.get("address"),
-				phone=data.get("phone"))
-			try:
-				user.save()
-				user.set_password(data.get("password"))
-				user.save()
-				msg="user created successfully"
-			except Exception as err:
-				msg = str(err)
-		elif "signin" in data:
-			data = request.POST 
-			username = data.get("email")
-			password = data.get("password")
-			#user = UserProfile.objects.filter(username=username, password=password)
-			user = authenticate(username=username,password=password)
-			if user:
-				msg="authenticated"
-			else:
-				msg="not authenticated"
-			
+		username = data.get("email")
+		password = data.get("password")
+		#user = UserProfile.objects.filter(username=username, password=password)
+		user = authenticate(username=username,password=password)
+		if user:
+			login(request, user)
+			msg="authenticated"
+		else:
+			msg="not authenticated"
+	return render(request,"center/signin.html",{"message":msg})
+def signout_view(request):
+	logout(request)
+	return redirect("/")
+def home_view(request):
+	msg=""		
 	return render(request,"center/home.html",{"message":msg})

@@ -17,61 +17,40 @@ class UserProfile(AbstractUser):
 class UserType(NameAbstract):
 	pass
 	#name = models.CharField(max_length=61)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Create your models here.
-
-
-class Parent(models.Model):
-	name = models.CharField(max_length=60)
-	email = models.EmailField()
-
-class Child(Parent):
-	# one to one relation to parent
-	phone = models.CharField(max_length=25)
-	address = models.TextField(default="address sample")
-
+class Company(NameAbstract):
+	description = models.CharField(max_length=250, default="")
+	owner = models.ForeignKey(UserProfile, blank=True, null=True, on_delete=models.PROTECT)
+	address = models.CharField(max_length=250 ,default="")
 
 class Product(NameAbstract):
-	#name = models.CharField(max_length=60)
-	cost = models.FloatField()
-	description = models.TextField(blank=True, null=True) #None
-class Customer(NameAbstract):
-	#name = models.CharField(max_length=60)
-	address = models.TextField()
-	email = models.EmailField(unique=True)
-	phone = models.CharField(unique=True, max_length=60)
-class SalesOrders(models.Model):
-	description = models.TextField(blank=True, null=True)
-	customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
-	products = models.ManyToManyField(Product)
+	description = models.TextField(default="")
+	company = models.ForeignKey(Company, on_delete=models.PROTECT, blank=True, null=True,)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

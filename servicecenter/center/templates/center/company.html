@@ -1,0 +1,46 @@
+{% extends "center/home.html"%}
+{% block content%}
+<div class="roe">
+<div class="col-sm-12">
+			<h4>{{ message }}</h4>
+			<h1>COMPANY</h1>
+			<form class="form-horizontal" method="post">
+				{% csrf_token %}
+				{{ form.as_table }}
+			      <button type="submit" class="btn btn-default" name="signin">Submit</button>
+		    </form>
+		</div>	
+
+</div>
+<div class="row">
+	<h3>COMPANIES</h3>
+	<table border=2>
+		<thead>
+			<tr>
+				<th>NAME</th>
+				<th>DESCRIPTION</th>
+				<th>OWNER</th>
+				<th>ADDRESS</th>
+				<th>OPERATIONS</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for comp in companies %}
+			<tr>
+				<td>{{comp.name}}</td>
+				<td>{{comp.description}}</td>
+				<td>{{comp.owner}}</td>
+				<td>{{comp.address}}</td>
+				<td><a href="/company_update/{{comp.id}}">UPDATE</a>
+					<a href="/company_delete/{{comp.id}}">DELETE</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+		
+{% endblock %}
+
+

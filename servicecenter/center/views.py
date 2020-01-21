@@ -14,6 +14,7 @@ def signup_view(request):
 					phone=data.get("phone"))
 		try:
 			user.save()
+			# to encrypt the password
 			user.set_password(data.get("password"))
 			user.save()
 			msg="user created successfully"

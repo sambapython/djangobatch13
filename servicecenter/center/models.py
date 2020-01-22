@@ -17,7 +17,8 @@ class UserProfile(AbstractUser):
 class UserType(NameAbstract):
 	pass
 	#name = models.CharField(max_length=61)
-class Company(NameAbstract):
+class Company(models.Model):
+	name = models.CharField(max_length=61, unique=True)
 	description = models.CharField(max_length=250, default="")
 	owner = models.ForeignKey(UserProfile, blank=True, null=True, on_delete=models.PROTECT)
 	address = models.CharField(max_length=250 ,default="")

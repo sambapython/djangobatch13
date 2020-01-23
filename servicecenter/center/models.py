@@ -23,6 +23,9 @@ class Company(models.Model):
 	owner = models.ForeignKey(UserProfile, blank=True, null=True, on_delete=models.PROTECT)
 	address = models.CharField(max_length=250 ,default="")
 
+	def __str__(self):
+		return "%s:%s"%(self.name,self.description)
+
 class Product(NameAbstract):
 	description = models.TextField(default="")
 	company = models.ForeignKey(Company, on_delete=models.PROTECT, blank=True, null=True,)

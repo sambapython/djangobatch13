@@ -17,6 +17,9 @@ from django.contrib import admin
 from django.urls import path, re_path
 from center.views import home_view, signout_view,signin_view, signup_view
 from center.company import company_view, company_view_update, company_create_view, company_view_delete
+from django.views.generic import CreateView,UpdateView,DeleteView,DetailView,ListView
+from center.product import ProductTemplateView
+from center.models import Product
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,5 +31,27 @@ urlpatterns = [
     path("company_create/",company_create_view),
     re_path("company_update/(?P<pk>[0-9]+)",company_view_update),# company_view_update(req_obj,pk=2)
     re_path("company_delete/(?P<pk>[0-9]+)",company_view_delete),
+    #path("product/",ProductTemplateView.as_view(template_name="center/product.html")),
+    path("product/",ListView.as_view(
+        model = Product
+        )),
+    path("product_create",CreateView.as_view(
+        model=Product,
+        fields="__all__",
+        success_url="/product",
+        #template_name="center/productform.html",
+        )),
+    re_path("product_update/(?P<pk>[0-9]+)/",UpdateView.as_view(
+        model=Product,
+        fields="__all__",
+        success_url="/product",
+        #template_name="center/productform.html",
+        )),
+    re_path("product_delete/(?P<pk>[0-9]+)/",DeleteView.as_view(
+        model=Product,
+        success_url="/product",
+        #template_name="center/productform.html",
+        )),
+
 
 ]

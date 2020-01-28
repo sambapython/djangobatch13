@@ -1,3 +1,3 @@
-function activate() {
-	// alert("hello")
-}
+$(document).ready(function() {
+    $('#datatable').DataTable();
+} );

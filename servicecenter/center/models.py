@@ -1,6 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth import login,logout,authenticate
+class BaseAbstract(models.Model):
+	created = models.DateTimeField(auto_now_add=True, auto_now=False)
+	updated = models.DateTimeField(auto_now=True, auto_now_add=False)
+	createdby  = models.ForeignKey("UserProfile", related_name="%(class)s_created",on_delete=models.PROTECT,
+		null=True,blank=True)
+	updatedby = models.ForeignKey("UserProfile",related_name="%(class)s_updated",on_delete=models.PROTECT,
+		null=True,blank=True)
+
+	class Meta:
+		abstract=True
 
 class NameAbstract(models.Model):
 	# abstract model
@@ -17,7 +27,7 @@ class UserProfile(AbstractUser):
 class UserType(NameAbstract):
 	pass
 	#name = models.CharField(max_length=61)
-class Company(models.Model):
+class Company(BaseAbstract):
 	name = models.CharField(max_length=61, unique=True)
 	description = models.CharField(max_length=250, default="")
 	owner = models.ForeignKey(UserProfile, blank=True, null=True, on_delete=models.PROTECT)
@@ -26,7 +36,7 @@ class Company(models.Model):
 	def __str__(self):
 		return "%s:%s"%(self.name,self.description)
 
-class Product(NameAbstract):
+class Product(NameAbstract, BaseAbstract):
 	description = models.TextField(default="")
 	company = models.ForeignKey(Company, on_delete=models.PROTECT, blank=True, null=True,)
 

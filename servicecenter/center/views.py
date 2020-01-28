@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from center.models import UserProfile
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def signup_view(request):
@@ -33,9 +34,12 @@ def signin_view(request):
 		if user:
 			login(request, user)
 			msg="authenticated"
+			next_url = request.GET.get("next","/") 
+			return redirect(next_url)
 		else:
 			msg="not authenticated"
 	return render(request,"center/signin.html",{"message":msg})
+@login_required
 def signout_view(request):
 	logout(request)
 	return redirect("/")

@@ -16,10 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path
 from center.views import home_view, signout_view,signin_view, signup_view
-from center.company import company_view, company_view_update, company_create_view, company_view_delete
+from center.company import company_view_update, company_create_view, company_view_delete, CompanyListView
 from django.views.generic import CreateView,UpdateView,DeleteView,DetailView,ListView
-from center.product import ProductTemplateView
+from center.product import ProductTemplateView, productlist, ProductCreateView
 from center.models import Product
+from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,31 +28,32 @@ urlpatterns = [
     path("signout/",signout_view),
     path("signin/",signin_view),
     path("signup/",signup_view),
-    path("company/",company_view),
+    path("company/",login_required(CompanyListView.as_view())),
     path("company_create/",company_create_view),
     re_path("company_update/(?P<pk>[0-9]+)",company_view_update),# company_view_update(req_obj,pk=2)
     re_path("company_delete/(?P<pk>[0-9]+)",company_view_delete),
     #path("product/",ProductTemplateView.as_view(template_name="center/product.html")),
-    path("product/",ListView.as_view(
-        model = Product
-        )),
-    path("product_create",CreateView.as_view(
+    # path("product/",ListView.as_view(
+    #     model = Product
+    #     )),
+    path("product/",productlist),
+    path("product_create",login_required(ProductCreateView.as_view(
+        # model=Product,
+        # fields=['name',"description","company"],
+        # success_url="/product",
+        #template_name="center/productform.html",
+        ))),
+    re_path("product_update/(?P<pk>[0-9]+)/",login_required(UpdateView.as_view(
         model=Product,
         fields="__all__",
         success_url="/product",
         #template_name="center/productform.html",
-        )),
-    re_path("product_update/(?P<pk>[0-9]+)/",UpdateView.as_view(
-        model=Product,
-        fields="__all__",
-        success_url="/product",
-        #template_name="center/productform.html",
-        )),
-    re_path("product_delete/(?P<pk>[0-9]+)/",DeleteView.as_view(
+        ))),
+    re_path("product_delete/(?P<pk>[0-9]+)/",login_required(DeleteView.as_view(
         model=Product,
         success_url="/product",
         #template_name="center/productform.html",
-        )),
+        ))),
 
 
 ]

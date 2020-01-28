@@ -7,7 +7,14 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <!-- <script type="text/javascript" src="/static/center/js/main.js"></script> -->
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/center/js/main.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css">
+  
+  
 </head>
 <body style="height:1500px">
 
@@ -18,13 +25,14 @@
       <a class="navbar-brand" href="#">SERVICE CENTER</a>
     </div>
     <ul class="nav navbar-nav" onclick="activate()">
+      {% if request.user.is_authenticated%}
 	 <li class="active"><a href="/caller">caller</a></li>
       <li><a href="/product">product</a></li>
       <li><a href="/productowner">productowner</a></li>
       <li><a href="/technician">technician</a></li>
       <li><a href="/company">COMPANY</a></li>
       <li><a href="/call">call</a></li>
-      {% if request.user.is_authenticated%}
+      
       <li><a href="/signout">SIGNOUT</a></li>
       {% else %}
       <li><a href="/signin">SIGNIN</a></li>

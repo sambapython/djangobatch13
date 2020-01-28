@@ -9,8 +9,26 @@
 
 </div>
 <div class="row">
+	<div class="col-sm-12">
+		<form>
+			{{form.as_table}}
+			<input type="submit" name="" value="getcompanies">
+		</form>
+	</div>
+	
+</div>
+<div class="row">
+	<div class="col-sm-12">
+		<h4>COUNT:{{paginator.count}},pages:{{paginator.num_pages}},have next:{{page_object.has_next}}
+
+		has_previous: {{page_object.has_previous}}, perpage:{{page_object.object_list|length}}
+		</h4>
+	</div>
+	
+</div>
+<div class="row">
 	<h3>COMPANIES</h3>
-	<table border=2>
+	<table id="datatable" class="table table-striped table-bordered" style="width:100%">
 		<thead>
 			<tr>
 				<th>NAME</th>

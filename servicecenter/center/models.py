@@ -11,6 +11,10 @@ class BaseAbstract(models.Model):
 
 	class Meta:
 		abstract=True
+class RequestTracker(models.Model):
+	client_ip = models.CharField(max_length=250, blank=True,null=True)
+	request_url = models.CharField(max_length=250, blank=True,null=True)
+	resp_code = models.CharField(max_length=250, blank=True,null=True) 
 
 class NameAbstract(models.Model):
 	# abstract model

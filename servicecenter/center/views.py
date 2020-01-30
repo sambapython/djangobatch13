@@ -21,6 +21,7 @@ def signup_view(request):
 			msg="user created successfully"
 		except Exception as err:
 			msg = str(err)
+			
 	return render(request,"center/signup.html",{"message":msg})
 def signin_view(request):
 	msg=""

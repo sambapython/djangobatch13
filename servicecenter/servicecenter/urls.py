@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, re_path
+from django.urls import path, re_path, include
 from center.views import home_view, signout_view,signin_view, signup_view
 from center.company import company_view_update, company_create_view, company_view_delete, CompanyListView
 from django.views.generic import CreateView,UpdateView,DeleteView,DetailView,ListView
@@ -54,6 +54,7 @@ urlpatterns = [
         success_url="/product",
         #template_name="center/productform.html",
         ))),
+    path("api/",include("api.urls"))
 
 
 ]

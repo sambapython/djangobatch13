@@ -22,7 +22,9 @@ from center.product import ProductTemplateView, productlist, ProductCreateView
 from center.models import Product
 from django.contrib.auth.decorators import login_required
 
+
 urlpatterns = [
+   
     path('admin/', admin.site.urls),
     path('',home_view),
     path("signout/",signout_view),

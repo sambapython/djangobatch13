@@ -125,3 +125,5 @@ STATIC_ROOT = os.path.join(BASE_DIR,"static")
 AUTH_USER_MODEL = "center.UserProfile"
 PAGE_COUNT = 100
 LOGIN_URL = "/signin/"
+GOOGLE_CLIENT_ID = ""
+GOOGLE_CLIENT_SECRET = ""

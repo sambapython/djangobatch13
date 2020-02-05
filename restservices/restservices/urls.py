@@ -25,6 +25,7 @@ router.register('category', CategoryViewSet)
 router.register('product', ProductViewSet)
 
 urlpatterns = [
-    path(r'docs/', schema_view),
+	path('admin/', admin.site.urls),
+    path('docs/', schema_view),
 ]
 urlpatterns = urlpatterns +  router.urls

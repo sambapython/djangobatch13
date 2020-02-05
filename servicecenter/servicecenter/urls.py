@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path, include
-from center.views import home_view, signout_view,signin_view, signup_view
+from center.views import home_view, signout_view,signin_view, signup_view, googlesignin, googleauth
 from center.company import company_view_update, company_create_view, company_view_delete, CompanyListView
 from django.views.generic import CreateView,UpdateView,DeleteView,DetailView,ListView
 from center.product import ProductTemplateView, productlist, ProductCreateView
@@ -56,7 +56,9 @@ urlpatterns = [
         success_url="/product",
         #template_name="center/productform.html",
         ))),
-    path("api/",include("api.urls"))
+    path("api/",include("api.urls")),
+    path("googlesignin/",googlesignin),
+    path("googleauth/",googleauth)
 
 
 ]

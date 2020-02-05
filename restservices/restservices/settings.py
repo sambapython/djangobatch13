@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
      "rest_framework",
+     "rest_framework.authtoken",
     'rest_framework_swagger',
     'api',
    
@@ -122,4 +123,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-REST_FRAMEWORK = { 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' }
+REST_FRAMEWORK = { 
+'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+'DEFAULT_AUTHENTICATION_CLASSES': (
+        #'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    "DEFAULT_PERMISSION_CLASSES":(
+        #"rest_framework.permissions.IsAuthenticatedOrReadOnly",
+        "rest_framework.permissions.IsAuthenticated",
+        )
+
+}

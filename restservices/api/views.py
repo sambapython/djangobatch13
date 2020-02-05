@@ -50,3 +50,5 @@ class CategorySerializer(ModelSerializer):
 class CategoryViewSet(ModelViewSet):
 	queryset = Category.objects.all()
 	serializer_class = CategorySerializer
+	authentication_classes = []
+	permission_classes = []

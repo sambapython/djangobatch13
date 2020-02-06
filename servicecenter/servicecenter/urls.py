@@ -21,6 +21,7 @@ from django.views.generic import CreateView,UpdateView,DeleteView,DetailView,Lis
 from center.product import ProductTemplateView, productlist, ProductCreateView
 from center.models import Product
 from django.contrib.auth.decorators import login_required
+from center.oauth import googleauth,googlelogin
 
 
 urlpatterns = [
@@ -57,8 +58,8 @@ urlpatterns = [
         #template_name="center/productform.html",
         ))),
     path("api/",include("api.urls")),
-    path("googlesignin/",googlesignin),
-    path("googleauth/",googleauth)
+    path("google/",googlelogin),
+    path("auth/",googleauth),
 
 
 ]

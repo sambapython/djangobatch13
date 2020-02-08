@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
 from api.models import Category, Product
 from rest_framework.serializers import ModelSerializer, ValidationError
+#from django_filters import rest_framework as filters
 
 class PutModelSerializer(ModelSerializer):
 	def __init__(self,*args,**kwargs):
@@ -46,9 +47,13 @@ class CategorySerializer(ModelSerializer):
 			raise ValidationError("Name not valid")
 		return value
 
+#class CategoryFilter(filters.FilterSet):
+
+
 # Create your views here.
 class CategoryViewSet(ModelViewSet):
 	queryset = Category.objects.all()
 	serializer_class = CategorySerializer
+	#filter_class = CategoryFilter
 	authentication_classes = []
 	permission_classes = []

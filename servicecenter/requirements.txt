@@ -1,0 +1,5 @@
+django==2
+djangorestframework
+gunicorn
+pillow
+django_filters

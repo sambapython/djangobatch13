@@ -1,10 +1,33 @@
 from django.shortcuts import render, redirect
-from center.models import UserProfile
+from center.models import UserProfile, Customer
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 import requests
 from django.http import HttpResponse
+from time import time
+import os
+
+def customer_view(request):
+	if request.method.lower() == "post":
+		data = request.POST 
+		files = request.FILES
+		image_name="image.png"
+		image = files.get("image")
+		if image:
+			name = image.name 
+			ext = "."+name.rsplit(".")[-1]
+			name = "".join(name.rsplit(".")[:-1])
+			image_name = name+ str(int(time()))+ext
+			#image_name = image_name+ext
+			data_image = image.read()
+			file_path = os.path.join(settings.BASE_DIR,"media",image_name)
+			f=open(file_path,"wb")
+			f.write(data_image)
+			f.close()
+		cust = Customer(name=data.get("name"),image=image_name)
+		cust.save()
+	return render(request,"center/customer.html",{"data":Customer.objects.all()})
 
 # Create your views here.
 def googleauth(request, *args, **kwargs):

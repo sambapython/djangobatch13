@@ -11,7 +11,7 @@ from center.models import Product
 
 class ProductCreateView(CreateView):
 	model=Product
-	fields=['name',"description","company"]
+	fields=['name',"description","company","image"]
 	success_url="/product"
 
 	def post(self, request, *args, **kwargs):

@@ -3,3 +3,4 @@ djangorestframework
 gunicorn
 pillow
 django_filters
+django-rest-swagger

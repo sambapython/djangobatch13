@@ -132,3 +132,7 @@ GOOGLE_REDIRECT_URL = ""
 fb_client_id = ""
 fb_client_secret = ""
 fb_redirect_uri = ""
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'

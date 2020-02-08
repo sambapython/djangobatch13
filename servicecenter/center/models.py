@@ -44,6 +44,11 @@ class Company(BaseAbstract):
 class Product(NameAbstract, BaseAbstract):
 	description = models.TextField(default="")
 	company = models.ForeignKey(Company, on_delete=models.PROTECT, blank=True, null=True,)
+	image = models.FileField(blank=True, null=True)
+
+class Customer(models.Model):
+	name = models.CharField(max_length=250)
+	image = models.FileField()
 
 
 

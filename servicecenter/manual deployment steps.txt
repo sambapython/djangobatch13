@@ -1,0 +1,17 @@
+Considering that we are in ubuntu
+install git:   apt-get install git
+clone the repo: git clone https://github.com/sambapython/djangobatch13.git
+goto the project directory: cd djangobatch13/servicecenter
+install dependent packages: pip install -r requirements.txt
+
+Considering that the installed required dbms and created a database
+update the database:  python manage.py makemigrations
+                      python manage.py migrate
+
+check able to run django server : python manage.py runerver
+
+run your app with gunicorn
+gunicorn --bind 0.0.0.0:8000 servicecenter.wsgi --workers=3
+
+if you face and issue with the static files.
+python manage.py collectstatic

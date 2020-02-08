@@ -15,13 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path, include
-from center.views import home_view, signout_view,signin_view, signup_view, googlesignin, googleauth
+from center.views import home_view, signout_view,signin_view, signup_view, googlesignin, googleauth, customer_view
 from center.company import company_view_update, company_create_view, company_view_delete, CompanyListView
 from django.views.generic import CreateView,UpdateView,DeleteView,DetailView,ListView
 from center.product import ProductTemplateView, productlist, ProductCreateView
 from center.models import Product
 from django.contrib.auth.decorators import login_required
 from center.oauth import googleauth,googlelogin
+from django.conf.urls.static import static
+from django.conf import settings
 
 
 urlpatterns = [
@@ -60,6 +62,10 @@ urlpatterns = [
     path("api/",include("api.urls")),
     path("google/",googlelogin),
     path("auth/",googleauth),
+    path("customer/",customer_view)
 
 
-]
+] +static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+#urlpatterns = urlpatterns+
+#urlpatterns = urlpatterns+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

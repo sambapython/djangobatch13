@@ -1,0 +1,25 @@
+#to pull an image from hub.docker.com
+
+docker pull python:3.8
+
+# to run an image
+docker run -itd -p 8000:8000 -p 80:80 --name=servie python:3.8
+
+# to check whether container is running or not
+docker ps
+
+# to connect to the container
+docker exec -it servie bash
+# if you are not doing with Docker container then follow the steps from here.
+# run the below commands inside the container
+apt-get install git
+
+#clone the code
+git clone https://github.com/sambapython/djangobatch13.git
+
+cd djangobatch13/servicecenter
+pip install requirements.txt
+python manage.py makemigrations
+python manage.py migrate
+python manage.py collectstatic
+python manage.py runserver

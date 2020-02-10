@@ -1,6 +1,10 @@
 
 from django import forms
-from center.models import Company, Product
+from center.models import Company, Product, Customer 
+class CustomerForm(forms.ModelForm):
+	class Meta:
+		model = Customer
+		fields = ["name","image"]
 class companySearchForm(forms.Form):
 	name=forms.CharField(max_length=250,required=False)
 	description = forms.CharField(max_length=250,required=False)

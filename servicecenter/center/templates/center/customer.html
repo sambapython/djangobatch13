@@ -1,10 +1,15 @@
 {% extends "center/home.html" %}
 {% block content%}
+
+<h1>empty</h1>
 <h1>Customer image</h1>
+<p>{{message}}</p>
+
 <form method="post" enctype="multipart/form-data">
-	{% csrf_token %}
-	name: <input type="text" name="name">
-	images: <input type="file" name="image">
+		{% csrf_token %}
+	<!-- name: <input type="text" name="name">
+	images: <input type="file" name="image"> -->
+	{{ form.as_p }}
 	<input type="submit" name="" value="add">
 </form>
 <table>

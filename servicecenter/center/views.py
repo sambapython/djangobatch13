@@ -7,27 +7,36 @@ import requests
 from django.http import HttpResponse
 from time import time
 import os
+from center.forms import CustomerForm
 
 def customer_view(request):
+	msg=""
 	if request.method.lower() == "post":
 		data = request.POST 
 		files = request.FILES
-		image_name="image.png"
-		image = files.get("image")
-		if image:
-			name = image.name 
-			ext = "."+name.rsplit(".")[-1]
-			name = "".join(name.rsplit(".")[:-1])
-			image_name = name+ str(int(time()))+ext
-			#image_name = image_name+ext
-			data_image = image.read()
-			file_path = os.path.join(settings.BASE_DIR,"media",image_name)
-			f=open(file_path,"wb")
-			f.write(data_image)
-			f.close()
-		cust = Customer(name=data.get("name"),image=image_name)
-		cust.save()
-	return render(request,"center/customer.html",{"data":Customer.objects.all()})
+		form = CustomerForm(data=data,files=files)
+		if form.is_valid():
+			form.save()
+		else:
+			msg = form._errors
+		# image_name="image.png"
+		# image = files.get("image")
+		# if image:
+		# 	name = image.name 
+		# 	ext = "."+name.rsplit(".")[-1]
+		# 	name = "".join(name.rsplit(".")[:-1])
+		# 	image_name = name+ str(int(time()))+ext
+		# 	#image_name = image_name+ext
+		# 	data_image = image.read()
+		# 	file_path = os.path.join(settings.BASE_DIR,"media",image_name)
+		# 	f=open(file_path,"wb")
+		# 	f.write(data_image)
+		# 	f.close()
+		# cust = Customer(name=data.get("name"),image=image_name)
+		# cust.save()
+	else:
+		form = CustomerForm()
+	return render(request,"center/customer.html",{"data":Customer.objects.all(),"form":form,",message":msg})
 
 # Create your views here.
 def googleauth(request, *args, **kwargs):
